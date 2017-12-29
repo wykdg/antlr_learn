@@ -1,6 +1,5 @@
 // Generated from D:/code/test_antlr/xxx\Expr.g4 by ANTLR 4.7
 package Expr;
-
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -8,7 +7,7 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  * by {@link ExprParser}.
  *
  * @param <T> The return type of the visit operation. Use {@link Void} for
- *            operations with no return type.
+ * operations with no return type.
  */
 public interface ExprVisitor<T> extends ParseTreeVisitor<T> {
     /**

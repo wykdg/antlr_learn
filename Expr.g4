@@ -33,10 +33,10 @@ blockStatement: '{' stat* '}';
 scopeStatment:blockStatement;
 
 functionDefExpr:
-'def' ID '(' ((ID  ',')*  ID)? ')' scopeStatment;
+'def' ID '(' (ID (','ID)*)? ')' scopeStatment;
 
 functionCallExpr:
-ID '(' expr (',' expr)* ')'
+ID '(' (expr (',' expr)*)? ')'
 ;
 
 expr :expr op=('*'|'/') expr    # MulDiv
