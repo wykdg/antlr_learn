@@ -214,6 +214,48 @@ public interface ExprListener extends ParseTreeListener {
     void exitFunctionDefExpr(ExprParser.FunctionDefExprContext ctx);
 
     /**
+     * Enter a parse tree produced by {@link ExprParser#functionBody}.
+     *
+     * @param ctx the parse tree
+     */
+    void enterFunctionBody(ExprParser.FunctionBodyContext ctx);
+
+    /**
+     * Exit a parse tree produced by {@link ExprParser#functionBody}.
+     *
+     * @param ctx the parse tree
+     */
+    void exitFunctionBody(ExprParser.FunctionBodyContext ctx);
+
+    /**
+     * Enter a parse tree produced by {@link ExprParser#returnStatment}.
+     *
+     * @param ctx the parse tree
+     */
+    void enterReturnStatment(ExprParser.ReturnStatmentContext ctx);
+
+    /**
+     * Exit a parse tree produced by {@link ExprParser#returnStatment}.
+     *
+     * @param ctx the parse tree
+     */
+    void exitReturnStatment(ExprParser.ReturnStatmentContext ctx);
+
+    /**
+     * Enter a parse tree produced by {@link ExprParser#functionDefParams}.
+     *
+     * @param ctx the parse tree
+     */
+    void enterFunctionDefParams(ExprParser.FunctionDefParamsContext ctx);
+
+    /**
+     * Exit a parse tree produced by {@link ExprParser#functionDefParams}.
+     *
+     * @param ctx the parse tree
+     */
+    void exitFunctionDefParams(ExprParser.FunctionDefParamsContext ctx);
+
+    /**
      * Enter a parse tree produced by {@link ExprParser#functionCallExpr}.
      *
      * @param ctx the parse tree
@@ -226,6 +268,20 @@ public interface ExprListener extends ParseTreeListener {
      * @param ctx the parse tree
      */
     void exitFunctionCallExpr(ExprParser.FunctionCallExprContext ctx);
+
+    /**
+     * Enter a parse tree produced by {@link ExprParser#functionCallParams}.
+     *
+     * @param ctx the parse tree
+     */
+    void enterFunctionCallParams(ExprParser.FunctionCallParamsContext ctx);
+
+    /**
+     * Exit a parse tree produced by {@link ExprParser#functionCallParams}.
+     *
+     * @param ctx the parse tree
+     */
+    void exitFunctionCallParams(ExprParser.FunctionCallParamsContext ctx);
 
     /**
      * Enter a parse tree produced by the {@code parens}
@@ -274,6 +330,22 @@ public interface ExprListener extends ParseTreeListener {
      * @param ctx the parse tree
      */
     void exitAddSub(ExprParser.AddSubContext ctx);
+
+    /**
+     * Enter a parse tree produced by the {@code f}
+     * labeled alternative in {@link ExprParser#expr}.
+     *
+     * @param ctx the parse tree
+     */
+    void enterF(ExprParser.FContext ctx);
+
+    /**
+     * Exit a parse tree produced by the {@code f}
+     * labeled alternative in {@link ExprParser#expr}.
+     *
+     * @param ctx the parse tree
+     */
+    void exitF(ExprParser.FContext ctx);
 
     /**
      * Enter a parse tree produced by the {@code ArrayNum}

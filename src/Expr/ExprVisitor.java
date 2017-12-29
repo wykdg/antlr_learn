@@ -128,12 +128,44 @@ public interface ExprVisitor<T> extends ParseTreeVisitor<T> {
     T visitFunctionDefExpr(ExprParser.FunctionDefExprContext ctx);
 
     /**
+     * Visit a parse tree produced by {@link ExprParser#functionBody}.
+     *
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    T visitFunctionBody(ExprParser.FunctionBodyContext ctx);
+
+    /**
+     * Visit a parse tree produced by {@link ExprParser#returnStatment}.
+     *
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    T visitReturnStatment(ExprParser.ReturnStatmentContext ctx);
+
+    /**
+     * Visit a parse tree produced by {@link ExprParser#functionDefParams}.
+     *
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    T visitFunctionDefParams(ExprParser.FunctionDefParamsContext ctx);
+
+    /**
      * Visit a parse tree produced by {@link ExprParser#functionCallExpr}.
      *
      * @param ctx the parse tree
      * @return the visitor result
      */
     T visitFunctionCallExpr(ExprParser.FunctionCallExprContext ctx);
+
+    /**
+     * Visit a parse tree produced by {@link ExprParser#functionCallParams}.
+     *
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    T visitFunctionCallParams(ExprParser.FunctionCallParamsContext ctx);
 
     /**
      * Visit a parse tree produced by the {@code parens}
@@ -161,6 +193,15 @@ public interface ExprVisitor<T> extends ParseTreeVisitor<T> {
      * @return the visitor result
      */
     T visitAddSub(ExprParser.AddSubContext ctx);
+
+    /**
+     * Visit a parse tree produced by the {@code f}
+     * labeled alternative in {@link ExprParser#expr}.
+     *
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    T visitF(ExprParser.FContext ctx);
 
     /**
      * Visit a parse tree produced by the {@code ArrayNum}

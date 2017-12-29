@@ -2,6 +2,7 @@ package wyk;
 
 import Expr.ExprBaseVisitor;
 import Expr.ExprParser;
+import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.util.Objects;
 
@@ -91,8 +92,11 @@ public class EvalVisitor extends ExprBaseVisitor {
     @Override
     public Object visitPrintExpr(ExprParser.PrintExprContext ctx) {
         Integer rtn = (Integer) visit(ctx.expr());
-        System.out.println(rtn.toString());
-        return 0;
+        if (rtn != null)
+            System.out.println(rtn.toString());
+        else
+            System.out.println("None");
+        return null;
     }
 
     @Override
@@ -183,5 +187,72 @@ public class EvalVisitor extends ExprBaseVisitor {
         array[index] = value;
         return 0;
     }
+
+    @Override
+    public Object visitFunctionDefExpr(ExprParser.FunctionDefExprContext ctx) {
+        Object[] value = new Object[2];
+        value[0] = ctx.functionBody();
+        value[1] = visit(ctx.functionDefParams());
+        String key = ctx.ID().toString();
+        scopeTable.setVaribale(key, value);
+        return 0;
+    }
+
+    @Override
+    public Object visitFunctionDefParams(ExprParser.FunctionDefParamsContext ctx) {
+        int elementCount = (ctx.getChildCount() + 1) / 2;
+        String[] array = new String[elementCount];
+        for (int i = 0; i < elementCount; ++i) {
+            array[i] = ctx.ID(i).toString();
+        }
+        return array;
+    }
+
+    @Override
+    public Object visitFunctionCallExpr(ExprParser.FunctionCallExprContext ctx) {
+        String key = ctx.ID().toString();
+        Object[] value = (Object[]) scopeTable.getVariable(key);
+        ParseTree parseTree = (ParseTree) value[0];
+
+        String[] paramsNames = (String[]) value[1];
+        Object[] paramsValues = (Object[]) visit(ctx.functionCallParams());
+        scopeTable.pushScope("function_scope");
+
+        for (int i = 0, n = paramsNames.length; i < n; ++i) {
+
+            scopeTable.setVaribale(paramsNames[i], paramsValues[i]);
+        }
+
+        Integer result = (Integer) visit(parseTree);
+        scopeTable.popScope();
+        return result;
+    }
+
+    @Override
+    public Object visitFunctionCallParams(ExprParser.FunctionCallParamsContext ctx) {
+        int elementCount = (ctx.getChildCount() + 1) / 2;
+        Object[] array = new Object[elementCount];
+        for (int i = 0; i < elementCount; ++i) {
+            array[i] = visit(ctx.expr(i));
+        }
+        return array;
+    }
+
+    @Override
+    public Object visitFunctionBody(ExprParser.FunctionBodyContext ctx) {
+        for (int i = 0, n = ctx.stat().size(); i < n; ++i)
+            visit(ctx.stat(i));
+
+        if (ctx.returnStatment() != null)
+            return visit(ctx.returnStatment());
+        else return null;
+    }
+
+    @Override
+    public Object visitReturnStatment(ExprParser.ReturnStatmentContext ctx) {
+        return visit(ctx.expr());
+    }
 }
 //for (a=1;a<100;a=a+1) if(a<50){print a; a=a+1;} else {print a;}
+//def f(a,b){print a+b;return 5;} print f(1,2);
+//a=1 def f(){print a;a=2;print a;} f();
