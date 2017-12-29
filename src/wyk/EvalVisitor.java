@@ -134,9 +134,9 @@ public class EvalVisitor extends ExprBaseVisitor {
 
     @Override
     public Object visitScopeStatment(ExprParser.ScopeStatmentContext ctx) {
-        scopeTable.pushScope("function_scope");
+//        scopeTable.pushScope("function_scope");
         visit(ctx.blockStatement());
-        scopeTable.popScope();
+//        scopeTable.popScope();
         return 0;
     }
 
@@ -191,7 +191,7 @@ public class EvalVisitor extends ExprBaseVisitor {
     @Override
     public Object visitFunctionDefExpr(ExprParser.FunctionDefExprContext ctx) {
         Object[] value = new Object[2];
-        value[0] = ctx.functionBody();
+        value[0] = ctx.scopeStatment();
         value[1] = visit(ctx.functionDefParams());
         String key = ctx.ID().toString();
         scopeTable.setVaribale(key, value);
@@ -223,7 +223,14 @@ public class EvalVisitor extends ExprBaseVisitor {
             scopeTable.setVaribale(paramsNames[i], paramsValues[i]);
         }
 
-        Integer result = (Integer) visit(parseTree);
+        Object result = 0;
+        try {
+            visit(parseTree);
+        } catch (ReturnValue returnValue) {
+            result = returnValue.value;
+        }
+
+
         scopeTable.popScope();
         return result;
     }
@@ -237,22 +244,37 @@ public class EvalVisitor extends ExprBaseVisitor {
         }
         return array;
     }
-
-    @Override
-    public Object visitFunctionBody(ExprParser.FunctionBodyContext ctx) {
-        for (int i = 0, n = ctx.stat().size(); i < n; ++i)
-            visit(ctx.stat(i));
-
-        if (ctx.returnStatment() != null)
-            return visit(ctx.returnStatment());
-        else return null;
-    }
+//
+//    @Override
+//    public Object visitFunctionBody(ExprParser.FunctionBodyContext ctx) {
+//        for (int i = 0, n = ctx.stat().size(); i < n; ++i)
+//            visit(ctx.stat(i));
+//
+//        if (ctx.returnStatment() != null)
+//            return visit(ctx.returnStatment());
+//        else return null;
+//    }
 
     @Override
     public Object visitReturnStatment(ExprParser.ReturnStatmentContext ctx) {
-        return visit(ctx.expr());
+        throw new ReturnValue(visit(ctx.expr()));
+//        return 0;
+
     }
+
+    @Override
+    public Object visitNegative(ExprParser.NegativeContext ctx) {
+        return (-1) * (Integer) visit(ctx.expr());
+    }
+
 }
+
 //for (a=1;a<100;a=a+1) if(a<50){print a; a=a+1;} else {print a;}
 //def f(a,b){print a+b;return 5;} print f(1,2);
-//a=1 def f(){print a;a=2;print a;} f();
+//a=1 def f(){print a;a=2;return 1;print a;} f();
+//def f(a,b) {return a+b;} print f(1,2);
+//def f(a) {if (a<2) return 1;else {return f(a-1)+f(a-2);}} print f(5);
+//def f(a) {if (a<2) print 1 ;else f(a-1);} f(5);
+//def f(a) {print a; if (a<2) return 1; else {print a;return f(a-1)+f(a-2);}} f(1);
+//def f(a) {if (a<2) return 1; else {print a;x=f(a-1);print a;y=f(a-1);print x;print y;return x+y;}} f(2);
+//def f(a) {if (a<2) return 1; else {print a;x=f(a-1);print a;return x;}} print f(3);

@@ -10,6 +10,7 @@ stat: expr ';'
     |blockStatement
     |printExpr
     |functionDefExpr
+    |returnStatment
  ;
 
 array:
@@ -42,11 +43,11 @@ blockStatement: '{' stat* '}';
 scopeStatment:blockStatement;
 
 functionDefExpr:
-'def' ID '('functionDefParams')' functionBody;
+'def' ID '('functionDefParams')' scopeStatment;
 
-functionBody:
-'{' stat*  returnStatment? '}'
-;
+//functionBody:
+//'{' stat*   '}'
+//;
 
 returnStatment:
 'return' expr ';';
@@ -61,6 +62,7 @@ functionCallParams:
  (expr (','expr)*)? ;
 
 expr :    functionCallExpr #f
+| '-' expr #negative
 |ID '[' expr ']'               #ArrayNum
 | '(' expr ')'                  # parens
 |expr op=('*'|'/') expr    # MulDiv

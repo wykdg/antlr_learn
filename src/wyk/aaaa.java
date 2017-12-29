@@ -10,7 +10,7 @@ import java.io.*;
 
 
 public class aaaa {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new
                 InputStreamReader(System.in));
         while (true) {
@@ -19,7 +19,7 @@ public class aaaa {
         }
     }
 
-    public static void run(String expr) throws Exception {
+    private static void run(String expr) {
 
         CharStream in = CharStreams.fromString(expr);
         ExprLexer lexer = new ExprLexer(in);
