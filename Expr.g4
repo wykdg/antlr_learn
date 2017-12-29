@@ -13,11 +13,21 @@ stat: expr ';'
     |functionCallExpr ';'
  ;
 
+array:
+'['(expr (',' expr)*)? ']'#arrayInit
+|'new' '[' expr ']'      #newArray
+;
+
+
+
  printExpr:
  'print' expr ';';
 
  assign:
- ID '=' expr ;
+ ID '=' expr #assignExpr
+ | ID '=' array #assignArray
+ | ID '['expr ']' '=' expr #assignArrayIndex
+ ;
 
 ifStatement:
  'if' '(' expr ')' stat ('else' stat)? ;
@@ -39,12 +49,14 @@ functionCallExpr:
 ID '(' (expr (',' expr)*)? ')'
 ;
 
-expr :expr op=('*'|'/') expr    # MulDiv
+expr :ID '[' expr ']'               #ArrayNum
+| '(' expr ')'                  # parens
+|expr op=('*'|'/') expr    # MulDiv
 | expr op=('+'|'-') expr        # AddSub
 | expr op=('<'|'>'|'==') expr      #Cmp
 | INT                           # int
 | ID                            # id
-| '(' expr ')'                  # parens
+
 ;
 
 SMALLER: '<';

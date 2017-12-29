@@ -53,7 +53,7 @@ public class EvalVisitor extends ExprBaseVisitor {
     }
 
     @Override
-    public Object visitAssign(ExprParser.AssignContext ctx) {
+    public Object visitAssignExpr(ExprParser.AssignExprContext ctx) {
         Integer value = (Integer) visit(ctx.expr());
         String key = ctx.ID().toString();
         scopeTable.setVaribale(key, value);
@@ -133,6 +133,54 @@ public class EvalVisitor extends ExprBaseVisitor {
         scopeTable.pushScope("function_scope");
         visit(ctx.blockStatement());
         scopeTable.popScope();
+        return 0;
+    }
+
+    @Override
+    public Object visitArrayInit(ExprParser.ArrayInitContext ctx) {
+        int elementCount = (ctx.getChildCount() - 1) / 2;
+        Integer[] array = new Integer[elementCount];
+        for (int i = 0; i < elementCount; ++i) {
+            array[i] = (Integer) visit(ctx.expr(i));
+        }
+        return array;
+    }
+
+    @Override
+    public Object visitNewArray(ExprParser.NewArrayContext ctx) {
+
+        int elementCount = (Integer) visit(ctx.expr());
+        Integer[] array = new Integer[elementCount];
+        for (int i = 0; i < elementCount; ++i) {
+            array[i] = 0;
+        }
+        return array;
+    }
+
+    @Override
+    public Object visitAssignArray(ExprParser.AssignArrayContext ctx) {
+        String key = ctx.ID().toString();
+        Object value = visit(ctx.array());
+        scopeTable.setVaribale(key, value);
+        return 0;
+    }
+
+    @Override
+    public Object visitArrayNum(ExprParser.ArrayNumContext ctx) {
+        Integer index = (Integer) visit(ctx.expr());
+        String key = ctx.ID().toString();
+        Integer[] array = (Integer[]) scopeTable.getVariable(key);
+        return array[index];
+
+    }
+
+    @Override
+    public Object visitAssignArrayIndex(ExprParser.AssignArrayIndexContext ctx) {
+        Integer index = (Integer) visit(ctx.expr(0));
+        String key = ctx.ID().toString();
+        Integer[] array = (Integer[]) scopeTable.getVariable(key);
+        Integer value = (Integer) visit(ctx.expr(1));
+        array[index] = value;
         return 0;
     }
 }

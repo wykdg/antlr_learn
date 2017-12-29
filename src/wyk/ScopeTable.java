@@ -26,17 +26,17 @@ public class ScopeTable {
         return scopeList.peek().getScope_name();
     }
 
-    public Integer getVariable(String key) {
+    public Object getVariable(String key) {
         for (int index = scopeList.size() - 1; index >= 0; --index) {
             Scope scope = scopeList.get(index);
-            Integer value = scope.get(key);
+            Object value = scope.get(key);
             if (value != null) return value;
 
         }
         return null;
     }
 
-    public void setVaribale(String key, Integer value) {
+    public void setVaribale(String key, Object value) {
         Scope scope = scopeList.peek();
         scope.put(key, value);
     }
@@ -46,18 +46,18 @@ public class ScopeTable {
 
 class Scope {
     private String scope_name;
-    private HashMap<String, Integer> scope;
+    private HashMap<String, Object> scope;
 
     Scope(String name) {
         scope_name = name;
-        scope = new HashMap<String, Integer>();
+        scope = new HashMap<String, Object>();
     }
 
-    public Integer get(String key) {
+    public Object get(String key) {
         return scope.get(key);
     }
 
-    public void put(String key, Integer value) {
+    public void put(String key, Object value) {
         scope.put(key, value);
     }
 

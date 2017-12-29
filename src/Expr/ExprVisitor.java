@@ -27,6 +27,24 @@ public interface ExprVisitor<T> extends ParseTreeVisitor<T> {
     T visitStat(ExprParser.StatContext ctx);
 
     /**
+     * Visit a parse tree produced by the {@code arrayInit}
+     * labeled alternative in {@link ExprParser#array}.
+     *
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    T visitArrayInit(ExprParser.ArrayInitContext ctx);
+
+    /**
+     * Visit a parse tree produced by the {@code newArray}
+     * labeled alternative in {@link ExprParser#array}.
+     *
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    T visitNewArray(ExprParser.NewArrayContext ctx);
+
+    /**
      * Visit a parse tree produced by {@link ExprParser#printExpr}.
      *
      * @param ctx the parse tree
@@ -35,12 +53,31 @@ public interface ExprVisitor<T> extends ParseTreeVisitor<T> {
     T visitPrintExpr(ExprParser.PrintExprContext ctx);
 
     /**
-     * Visit a parse tree produced by {@link ExprParser#assign}.
+     * Visit a parse tree produced by the {@code assignExpr}
+     * labeled alternative in {@link ExprParser#assign}.
      *
      * @param ctx the parse tree
      * @return the visitor result
      */
-    T visitAssign(ExprParser.AssignContext ctx);
+    T visitAssignExpr(ExprParser.AssignExprContext ctx);
+
+    /**
+     * Visit a parse tree produced by the {@code assignArray}
+     * labeled alternative in {@link ExprParser#assign}.
+     *
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    T visitAssignArray(ExprParser.AssignArrayContext ctx);
+
+    /**
+     * Visit a parse tree produced by the {@code assignArrayIndex}
+     * labeled alternative in {@link ExprParser#assign}.
+     *
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    T visitAssignArrayIndex(ExprParser.AssignArrayIndexContext ctx);
 
     /**
      * Visit a parse tree produced by {@link ExprParser#ifStatement}.
@@ -124,6 +161,15 @@ public interface ExprVisitor<T> extends ParseTreeVisitor<T> {
      * @return the visitor result
      */
     T visitAddSub(ExprParser.AddSubContext ctx);
+
+    /**
+     * Visit a parse tree produced by the {@code ArrayNum}
+     * labeled alternative in {@link ExprParser#expr}.
+     *
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    T visitArrayNum(ExprParser.ArrayNumContext ctx);
 
     /**
      * Visit a parse tree produced by the {@code Cmp}

@@ -36,6 +36,38 @@ public interface ExprListener extends ParseTreeListener {
     void exitStat(ExprParser.StatContext ctx);
 
     /**
+     * Enter a parse tree produced by the {@code arrayInit}
+     * labeled alternative in {@link ExprParser#array}.
+     *
+     * @param ctx the parse tree
+     */
+    void enterArrayInit(ExprParser.ArrayInitContext ctx);
+
+    /**
+     * Exit a parse tree produced by the {@code arrayInit}
+     * labeled alternative in {@link ExprParser#array}.
+     *
+     * @param ctx the parse tree
+     */
+    void exitArrayInit(ExprParser.ArrayInitContext ctx);
+
+    /**
+     * Enter a parse tree produced by the {@code newArray}
+     * labeled alternative in {@link ExprParser#array}.
+     *
+     * @param ctx the parse tree
+     */
+    void enterNewArray(ExprParser.NewArrayContext ctx);
+
+    /**
+     * Exit a parse tree produced by the {@code newArray}
+     * labeled alternative in {@link ExprParser#array}.
+     *
+     * @param ctx the parse tree
+     */
+    void exitNewArray(ExprParser.NewArrayContext ctx);
+
+    /**
      * Enter a parse tree produced by {@link ExprParser#printExpr}.
      *
      * @param ctx the parse tree
@@ -50,18 +82,52 @@ public interface ExprListener extends ParseTreeListener {
     void exitPrintExpr(ExprParser.PrintExprContext ctx);
 
     /**
-     * Enter a parse tree produced by {@link ExprParser#assign}.
+     * Enter a parse tree produced by the {@code assignExpr}
+     * labeled alternative in {@link ExprParser#assign}.
      *
      * @param ctx the parse tree
      */
-    void enterAssign(ExprParser.AssignContext ctx);
+    void enterAssignExpr(ExprParser.AssignExprContext ctx);
 
     /**
-     * Exit a parse tree produced by {@link ExprParser#assign}.
+     * Exit a parse tree produced by the {@code assignExpr}
+     * labeled alternative in {@link ExprParser#assign}.
      *
      * @param ctx the parse tree
      */
-    void exitAssign(ExprParser.AssignContext ctx);
+    void exitAssignExpr(ExprParser.AssignExprContext ctx);
+
+    /**
+     * Enter a parse tree produced by the {@code assignArray}
+     * labeled alternative in {@link ExprParser#assign}.
+     *
+     * @param ctx the parse tree
+     */
+    void enterAssignArray(ExprParser.AssignArrayContext ctx);
+
+    /**
+     * Exit a parse tree produced by the {@code assignArray}
+     * labeled alternative in {@link ExprParser#assign}.
+     *
+     * @param ctx the parse tree
+     */
+    void exitAssignArray(ExprParser.AssignArrayContext ctx);
+
+    /**
+     * Enter a parse tree produced by the {@code assignArrayIndex}
+     * labeled alternative in {@link ExprParser#assign}.
+     *
+     * @param ctx the parse tree
+     */
+    void enterAssignArrayIndex(ExprParser.AssignArrayIndexContext ctx);
+
+    /**
+     * Exit a parse tree produced by the {@code assignArrayIndex}
+     * labeled alternative in {@link ExprParser#assign}.
+     *
+     * @param ctx the parse tree
+     */
+    void exitAssignArrayIndex(ExprParser.AssignArrayIndexContext ctx);
 
     /**
      * Enter a parse tree produced by {@link ExprParser#ifStatement}.
@@ -208,6 +274,22 @@ public interface ExprListener extends ParseTreeListener {
      * @param ctx the parse tree
      */
     void exitAddSub(ExprParser.AddSubContext ctx);
+
+    /**
+     * Enter a parse tree produced by the {@code ArrayNum}
+     * labeled alternative in {@link ExprParser#expr}.
+     *
+     * @param ctx the parse tree
+     */
+    void enterArrayNum(ExprParser.ArrayNumContext ctx);
+
+    /**
+     * Exit a parse tree produced by the {@code ArrayNum}
+     * labeled alternative in {@link ExprParser#expr}.
+     *
+     * @param ctx the parse tree
+     */
+    void exitArrayNum(ExprParser.ArrayNumContext ctx);
 
     /**
      * Enter a parse tree produced by the {@code Cmp}
