@@ -271,7 +271,7 @@ public class EvalVisitor extends ExprBaseVisitor {
         String className=ctx.ID().toString();
         Scope classScope= (Scope) scopeTable.getVariable(className);
 
-        return
+        return 0;
     }
 }
 
