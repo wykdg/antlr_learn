@@ -37,13 +37,6 @@ public interface ExprVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitNewArray(ExprParser.NewArrayContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code newClass}
-	 * labeled alternative in {@link ExprParser#array}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitNewClass(ExprParser.NewClassContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link ExprParser#printExpr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -177,6 +170,13 @@ public interface ExprVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitParens(ExprParser.ParensContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code newClass}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNewClass(ExprParser.NewClassContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code MulDiv}
 	 * labeled alternative in {@link ExprParser#expr}.

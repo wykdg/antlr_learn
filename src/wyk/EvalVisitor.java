@@ -248,8 +248,6 @@ public class EvalVisitor extends ExprBaseVisitor {
     @Override
     public Object visitReturnStatment(ExprParser.ReturnStatmentContext ctx) {
         throw new ReturnValue(visit(ctx.expr()));
-//        return 0;
-
     }
 
     @Override
@@ -270,7 +268,10 @@ public class EvalVisitor extends ExprBaseVisitor {
 
     @Override
     public Object visitNewClass(ExprParser.NewClassContext ctx) {
-        return super.visitNewClass(ctx);
+        String className=ctx.ID().toString();
+        Scope classScope= (Scope) scopeTable.getVariable(className);
+
+        return
     }
 }
 

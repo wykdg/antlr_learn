@@ -17,9 +17,8 @@ stat: expr ';'
 
 
 array:
-'['(expr (',' expr)*)? ']'#arrayInit
-|'new' '[' expr ']'      #newArray
-|'new' ID                 #newClass
+'['(expr (',' expr)*)? ']' #arrayInit
+|'new' '[' expr ']'        #newArray
 ;
 
 
@@ -76,8 +75,8 @@ functionDefExpr
 
 
 classCal:
-ID '.'expr #classvar
-|ID'.'assign #classassign
+ID '.'ID #classvar
+|ID'.'ID '=' expr #classassign
 |ID '.' functionCallExpr #classfuncall
 ;
 
@@ -98,6 +97,7 @@ expr :    functionCallExpr #f
 |expr op=('*'|'/') expr    # MulDiv
 | expr op=('+'|'-') expr        # AddSub
 | expr op=('<'|'>'|'==') expr      #Cmp
+| 'new' ID   '('')'                   #newClass
 | INT                           # int
 | ID                            # id
 

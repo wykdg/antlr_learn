@@ -52,18 +52,6 @@ public interface ExprListener extends ParseTreeListener {
 	 */
 	void exitNewArray(ExprParser.NewArrayContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code newClass}
-	 * labeled alternative in {@link ExprParser#array}.
-	 * @param ctx the parse tree
-	 */
-	void enterNewClass(ExprParser.NewClassContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code newClass}
-	 * labeled alternative in {@link ExprParser#array}.
-	 * @param ctx the parse tree
-	 */
-	void exitNewClass(ExprParser.NewClassContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link ExprParser#printExpr}.
 	 * @param ctx the parse tree
 	 */
@@ -289,6 +277,18 @@ public interface ExprListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitParens(ExprParser.ParensContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code newClass}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterNewClass(ExprParser.NewClassContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code newClass}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitNewClass(ExprParser.NewClassContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code MulDiv}
 	 * labeled alternative in {@link ExprParser#expr}.
