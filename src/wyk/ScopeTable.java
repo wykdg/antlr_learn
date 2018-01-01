@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Stack;
 
 public class ScopeTable {
-    private Stack<Scope> scopeList;
+    protected Stack<Scope> scopeList;
 
     ScopeTable() {
         scopeList = new Stack<Scope>();
@@ -25,7 +25,10 @@ public class ScopeTable {
     public String getCurrentScopeName() {
         return scopeList.peek().getScope_name();
     }
-
+    public Scope top()
+    {
+        return scopeList.peek();
+    }
     public Object getVariable(String key) {
         for (int index = scopeList.size() - 1; index >= 0; --index) {
             Scope scope = scopeList.get(index);
@@ -40,8 +43,14 @@ public class ScopeTable {
         Scope scope = scopeList.peek();
         scope.put(key, value);
     }
+}
 
-
+class StructScope extends ScopeTable {
+    public Object getVariable(String key) {
+        int index = scopeList.size() - 1;
+        Scope scope = scopeList.get(index);
+        return scope.get(key);
+    }
 }
 
 class Scope {

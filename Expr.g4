@@ -11,11 +11,15 @@ stat: expr ';'
     |printExpr
     |functionDefExpr
     |returnStatment
+    |classDef
  ;
+
+
 
 array:
 '['(expr (',' expr)*)? ']'#arrayInit
 |'new' '[' expr ']'      #newArray
+|'new' ID                 #newClass
 ;
 
 
@@ -60,6 +64,32 @@ ID '(' functionCallParams ')'
 ;
 functionCallParams:
  (expr (','expr)*)? ;
+
+
+classDef:
+'class' ID '{' classInnerDef*'}'
+;
+classInnerDef:
+functionDefExpr
+|assign ';'
+;
+
+
+classCal:
+ID '.'expr #classvar
+|ID'.'assign #classassign
+|ID '.' functionCallExpr #classfuncall
+;
+
+
+
+
+
+
+
+
+
+
 
 expr :    functionCallExpr #f
 | '-' expr #negative

@@ -244,16 +244,6 @@ public class EvalVisitor extends ExprBaseVisitor {
         }
         return array;
     }
-//
-//    @Override
-//    public Object visitFunctionBody(ExprParser.FunctionBodyContext ctx) {
-//        for (int i = 0, n = ctx.stat().size(); i < n; ++i)
-//            visit(ctx.stat(i));
-//
-//        if (ctx.returnStatment() != null)
-//            return visit(ctx.returnStatment());
-//        else return null;
-//    }
 
     @Override
     public Object visitReturnStatment(ExprParser.ReturnStatmentContext ctx) {
@@ -267,6 +257,21 @@ public class EvalVisitor extends ExprBaseVisitor {
         return (-1) * (Integer) visit(ctx.expr());
     }
 
+    @Override
+    public Object visitClassDef(ExprParser.ClassDefContext ctx) {
+        scopeTable.pushScope("class");
+        super.visitChildren(ctx);
+        String className=ctx.ID().toString();
+        Scope scope = scopeTable.top();
+        scopeTable.setVaribale(className,scope);
+        scopeTable.popScope();
+        return 0;
+    }
+
+    @Override
+    public Object visitNewClass(ExprParser.NewClassContext ctx) {
+        return super.visitNewClass(ctx);
+    }
 }
 
 //for (a=1;a<100;a=a+1) if(a<50){print a; a=a+1;} else {print a;}
