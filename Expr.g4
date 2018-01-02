@@ -66,7 +66,7 @@ functionCallParams:
 
 
 classDef:
-'class' ID '{' classInnerDef*'}' ';'
+'class' ID '{' classInnerDef*'}'
 ;
 classInnerDef:
 functionDefExpr
