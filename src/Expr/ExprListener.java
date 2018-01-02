@@ -1,4 +1,4 @@
-// Generated from D:/IdeaProjects/antlr_learn\Expr.g4 by ANTLR 4.7
+// Generated from D:/code/test_antlr/xxx\Expr.g4 by ANTLR 4.7
 package Expr;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -230,18 +230,20 @@ public interface ExprListener extends ParseTreeListener {
 	 */
 	void exitClassvar(ExprParser.ClassvarContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code classassign}
-	 * labeled alternative in {@link ExprParser#classCal}.
+     * Enter a parse tree produced by the {@code classAssign}
+     * labeled alternative in {@link ExprParser#classCal}.
 	 * @param ctx the parse tree
 	 */
-	void enterClassassign(ExprParser.ClassassignContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code classassign}
-	 * labeled alternative in {@link ExprParser#classCal}.
+    void enterClassAssign(ExprParser.ClassAssignContext ctx);
+
+    /**
+     * Exit a parse tree produced by the {@code classAssign}
+     * labeled alternative in {@link ExprParser#classCal}.
 	 * @param ctx the parse tree
 	 */
-	void exitClassassign(ExprParser.ClassassignContext ctx);
-	/**
+    void exitClassAssign(ExprParser.ClassAssignContext ctx);
+
+    /**
 	 * Enter a parse tree produced by the {@code classfuncall}
 	 * labeled alternative in {@link ExprParser#classCal}.
 	 * @param ctx the parse tree
@@ -290,7 +292,22 @@ public interface ExprListener extends ParseTreeListener {
 	 */
 	void exitNewClass(ExprParser.NewClassContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code MulDiv}
+     * Enter a parse tree produced by the {@code c}
+     * labeled alternative in {@link ExprParser#expr}.
+     * @param ctx the parse tree
+     */
+    void enterC(ExprParser.CContext ctx);
+
+    /**
+     * Exit a parse tree produced by the {@code c}
+     * labeled alternative in {@link ExprParser#expr}.
+     *
+     * @param ctx the parse tree
+     */
+    void exitC(ExprParser.CContext ctx);
+
+    /**
+     * Enter a parse tree produced by the {@code MulDiv}
 	 * labeled alternative in {@link ExprParser#expr}.
 	 * @param ctx the parse tree
 	 */

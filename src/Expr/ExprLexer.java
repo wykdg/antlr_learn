@@ -1,4 +1,4 @@
-// Generated from D:/IdeaProjects/antlr_learn\Expr.g4 by ANTLR 4.7
+// Generated from D:/code/test_antlr/xxx\Expr.g4 by ANTLR 4.7
 package Expr;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;

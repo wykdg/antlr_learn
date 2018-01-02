@@ -1,4 +1,4 @@
-// Generated from D:/IdeaProjects/antlr_learn\Expr.g4 by ANTLR 4.7
+// Generated from D:/code/test_antlr/xxx\Expr.g4 by ANTLR 4.7
 package Expr;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -268,14 +268,20 @@ public class ExprBaseListener implements ExprListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterClassassign(ExprParser.ClassassignContext ctx) { }
-	/**
+    @Override
+    public void enterClassAssign(ExprParser.ClassAssignContext ctx) {
+    }
+
+    /**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitClassassign(ExprParser.ClassassignContext ctx) { }
-	/**
+    @Override
+    public void exitClassAssign(ExprParser.ClassAssignContext ctx) {
+    }
+
+    /**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
@@ -324,7 +330,25 @@ public class ExprBaseListener implements ExprListener {
 	 */
 	@Override public void exitNewClass(ExprParser.NewClassContext ctx) { }
 	/**
-	 * {@inheritDoc}
+     * {@inheritDoc}
+     *
+     * <p>The default implementation does nothing.</p>
+     */
+    @Override
+    public void enterC(ExprParser.CContext ctx) {
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * <p>The default implementation does nothing.</p>
+     */
+    @Override
+    public void exitC(ExprParser.CContext ctx) {
+    }
+
+    /**
+     * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */

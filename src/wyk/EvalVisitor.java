@@ -49,15 +49,15 @@ public class EvalVisitor extends ExprBaseVisitor {
     @Override
     public Object visitId(ExprParser.IdContext ctx) {
         String key = ctx.ID().toString();
-        return scopeTable.getVariable(key);
+        return scopeTable.getVariable(key).getValue();
 //        return super.visitId(ctx);
     }
 
     @Override
     public Object visitAssignExpr(ExprParser.AssignExprContext ctx) {
-        Integer value = (Integer) visit(ctx.expr());
+        Object value = visit(ctx.expr());
         String key = ctx.ID().toString();
-        scopeTable.setVaribale(key, value);
+        scopeTable.setVaribale(key, new Variable(value, "var"));
         return value;
     }
 
@@ -165,7 +165,7 @@ public class EvalVisitor extends ExprBaseVisitor {
     public Object visitAssignArray(ExprParser.AssignArrayContext ctx) {
         String key = ctx.ID().toString();
         Object value = visit(ctx.array());
-        scopeTable.setVaribale(key, value);
+        scopeTable.setVaribale(key, new Variable(value, "array"));
         return 0;
     }
 
@@ -173,7 +173,7 @@ public class EvalVisitor extends ExprBaseVisitor {
     public Object visitArrayNum(ExprParser.ArrayNumContext ctx) {
         Integer index = (Integer) visit(ctx.expr());
         String key = ctx.ID().toString();
-        Integer[] array = (Integer[]) scopeTable.getVariable(key);
+        Integer[] array = (Integer[]) scopeTable.getVariable(key).getValue();
         return array[index];
 
     }
@@ -182,7 +182,7 @@ public class EvalVisitor extends ExprBaseVisitor {
     public Object visitAssignArrayIndex(ExprParser.AssignArrayIndexContext ctx) {
         Integer index = (Integer) visit(ctx.expr(0));
         String key = ctx.ID().toString();
-        Integer[] array = (Integer[]) scopeTable.getVariable(key);
+        Integer[] array = (Integer[]) scopeTable.getVariable(key).getValue();
         Integer value = (Integer) visit(ctx.expr(1));
         array[index] = value;
         return 0;
@@ -194,7 +194,7 @@ public class EvalVisitor extends ExprBaseVisitor {
         value[0] = ctx.scopeStatment();
         value[1] = visit(ctx.functionDefParams());
         String key = ctx.ID().toString();
-        scopeTable.setVaribale(key, value);
+        scopeTable.setVaribale(key, new Variable(value, "fun"));
         return 0;
     }
 
@@ -211,16 +211,23 @@ public class EvalVisitor extends ExprBaseVisitor {
     @Override
     public Object visitFunctionCallExpr(ExprParser.FunctionCallExprContext ctx) {
         String key = ctx.ID().toString();
-        Object[] value = (Object[]) scopeTable.getVariable(key);
+        Object[] value = (Object[]) scopeTable.getVariable(key).getValue();
         ParseTree parseTree = (ParseTree) value[0];
 
         String[] paramsNames = (String[]) value[1];
         Object[] paramsValues = (Object[]) visit(ctx.functionCallParams());
+        Scope lastScope = null;
+        if (Objects.equals(scopeTable.top().getScopeName(), "function_scope")) {
+            lastScope = scopeTable.top();
+            scopeTable.popScope();
+        }
+
+
         scopeTable.pushScope("function_scope");
 
         for (int i = 0, n = paramsNames.length; i < n; ++i) {
 
-            scopeTable.setVaribale(paramsNames[i], paramsValues[i]);
+            scopeTable.setVaribale(paramsNames[i], new Variable(paramsValues[i], "params"));
         }
 
         Object result = 0;
@@ -232,6 +239,9 @@ public class EvalVisitor extends ExprBaseVisitor {
 
 
         scopeTable.popScope();
+        if (lastScope != null) {
+            scopeTable.pushScope(lastScope);
+        }
         return result;
     }
 
@@ -261,17 +271,47 @@ public class EvalVisitor extends ExprBaseVisitor {
         super.visitChildren(ctx);
         String className=ctx.ID().toString();
         Scope scope = scopeTable.top();
-        scopeTable.setVaribale(className,scope);
         scopeTable.popScope();
+        scopeTable.setVaribale(className, new Variable(scope, "classScope"));
+
         return 0;
     }
 
     @Override
     public Object visitNewClass(ExprParser.NewClassContext ctx) {
         String className=ctx.ID().toString();
-        Scope classScope= (Scope) scopeTable.getVariable(className);
+        Scope classScope = (Scope) scopeTable.getVariable(className).getValue();
 
+        return classScope.getScopeCopy();
+    }
+
+    @Override
+    public Object visitClassvar(ExprParser.ClassvarContext ctx) {
+        String className = ctx.ID(0).toString();
+        String variableName = ctx.ID(1).toString();
+        Scope scope = (Scope) scopeTable.getVariable(className).getValue();
+        return scope.get(variableName).getValue();
+    }
+
+    @Override
+    public Object visitClassAssign(ExprParser.ClassAssignContext ctx) {
+        String className = ctx.ID(0).toString();
+        String variableName = ctx.ID(1).toString();
+        Scope scope = (Scope) scopeTable.getVariable(className).getValue();
+        Object value = visit(ctx.expr());
+        scope.put(variableName, new Variable(value, "var"));
         return 0;
+    }
+
+    @Override
+    public Object visitClassfuncall(ExprParser.ClassfuncallContext ctx) {
+        String className = ctx.ID().toString();
+
+        Scope scope = (Scope) scopeTable.getVariable(className).getValue();
+        scopeTable.pushScope(scope);
+        Object result = visit(ctx.functionCallExpr());
+        scopeTable.popScope();
+        return result;
     }
 }
 
@@ -284,3 +324,4 @@ public class EvalVisitor extends ExprBaseVisitor {
 //def f(a) {print a; if (a<2) return 1; else {print a;return f(a-1)+f(a-2);}} f(1);
 //def f(a) {if (a<2) return 1; else {print a;x=f(a-1);print a;y=f(a-1);print x;print y;return x+y;}} f(2);
 //def f(a) {if (a<2) return 1; else {print a;x=f(a-1);print a;return x;}} print f(3);
+//a=2;class x{a=1;def f(x){a=3;for(i=1;i<5;i=i+1)g(i);return a;} def g(x){print x;}};  b=new x(); print b.f(5);

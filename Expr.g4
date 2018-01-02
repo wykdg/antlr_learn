@@ -66,7 +66,7 @@ functionCallParams:
 
 
 classDef:
-'class' ID '{' classInnerDef*'}'
+'class' ID '{' classInnerDef*'}' ';'
 ;
 classInnerDef:
 functionDefExpr
@@ -76,7 +76,7 @@ functionDefExpr
 
 classCal:
 ID '.'ID #classvar
-|ID'.'ID '=' expr #classassign
+|ID'.'ID '=' expr #classAssign
 |ID '.' functionCallExpr #classfuncall
 ;
 
@@ -98,6 +98,7 @@ expr :    functionCallExpr #f
 | expr op=('+'|'-') expr        # AddSub
 | expr op=('<'|'>'|'==') expr      #Cmp
 | 'new' ID   '('')'                   #newClass
+|classCal                         #c
 | INT                           # int
 | ID                            # id
 

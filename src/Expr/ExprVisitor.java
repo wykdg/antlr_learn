@@ -1,4 +1,4 @@
-// Generated from D:/IdeaProjects/antlr_learn\Expr.g4 by ANTLR 4.7
+// Generated from D:/code/test_antlr/xxx\Expr.g4 by ANTLR 4.7
 package Expr;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -143,12 +143,12 @@ public interface ExprVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitClassvar(ExprParser.ClassvarContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code classassign}
+	 * Visit a parse tree produced by the {@code classAssign}
 	 * labeled alternative in {@link ExprParser#classCal}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitClassassign(ExprParser.ClassassignContext ctx);
+	T visitClassAssign(ExprParser.ClassAssignContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code classfuncall}
 	 * labeled alternative in {@link ExprParser#classCal}.
@@ -177,6 +177,14 @@ public interface ExprVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitNewClass(ExprParser.NewClassContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code c}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitC(ExprParser.CContext ctx);
+
 	/**
 	 * Visit a parse tree produced by the {@code MulDiv}
 	 * labeled alternative in {@link ExprParser#expr}.

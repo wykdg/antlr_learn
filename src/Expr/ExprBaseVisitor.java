@@ -1,4 +1,4 @@
-// Generated from D:/IdeaProjects/antlr_learn\Expr.g4 by ANTLR 4.7
+// Generated from D:/code/test_antlr/xxx\Expr.g4 by ANTLR 4.7
 package Expr;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
@@ -164,7 +164,10 @@ public class ExprBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements E
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitClassassign(ExprParser.ClassassignContext ctx) { return visitChildren(ctx); }
+	@Override
+	public T visitClassAssign(ExprParser.ClassAssignContext ctx) {
+		return visitChildren(ctx);
+	}
 	/**
 	 * {@inheritDoc}
 	 *
@@ -196,6 +199,17 @@ public class ExprBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements E
 	/**
 	 * {@inheritDoc}
 	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override
+	public T visitC(ExprParser.CContext ctx) {
+		return visitChildren(ctx);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * <p>
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
